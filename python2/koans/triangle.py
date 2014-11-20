@@ -18,6 +18,11 @@
 #   about_triangle_project_2.py
 #
 def triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        raise TriangleError, "Values must be greater zero"
+    if a > b + c or b > a + c or c > a +b:
+        raise TriangleError, "One value must not be bigger than " + \
+            "the sum of the others"
     if a == b == c:
         return 'equilateral'
     if a == b or b == c or a == c:

@@ -39,13 +39,14 @@ def score(dice):
         counts[number] = counts[number] + 1
     
     score = 0
-    if counts[1] >= 3:
-        score += 1000
-        counts[1] -= 3
-    for number in range(2,7):
-        if counts[number] >= 3:
-            score += number * 100
-            counts[number] -= 3
+    for number in range(1,7):
+        if counts[number] < 3:
+            continue
+        three_value = number * 100
+        if number == 1:
+            three_value = 1000
+        score += three_value
+        counts[number] -= 3
     if counts[1] > 0:
         score += 100 * counts[1]
     if counts[5] > 0:

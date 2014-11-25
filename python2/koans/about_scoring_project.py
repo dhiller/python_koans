@@ -49,19 +49,21 @@ def score(dice):
     def is_equal(number):
         return lambda x: x == number
 
+    def score_for_number(number, count):
+        remaining = count
+        score = 0
+        if count > 2:
+            score = score_for_three(number)
+            remaining -= 3
+        score += remaining * score_for_remaining(number)
+        return score
+
     counts = { number: len(filter(is_equal(number), dice)) 
                        for number in range(1,7) }
-    scores_for_three = { number: score_for_three(number)
-                         for number in range(1,7) }
 
     score = 0
     for number in range(1,7):
-        if counts[number] < 3:
-            continue
-        score += scores_for_three[number]
-        counts[number] -= 3
-    for number in range(1, 7):
-        score += counts[number] * score_for_remaining(number)
+        score += score_for_number(number, counts[number])
     return score 
 
 

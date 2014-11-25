@@ -34,22 +34,24 @@ from runner.koan import *
 # Your goal is to write the score method.
 
 def score(dice):
+    def score_for_three(number):
+        if number == 1:
+            return 1000
+        return number * 100
+
     def is_equal(number):
         return lambda x: x == number
 
-#    if len(dice) == 0:
-#        return 0
-
-    counts = { number: len(filter(is_equal(number), dice)) for number in range(1,7) }
+    counts = { number: len(filter(is_equal(number), dice)) 
+                       for number in range(1,7) }
+    scores_for_three = { number: score_for_three(number)
+                         for number in range(1,7) }
 
     score = 0
     for number in range(1,7):
         if counts[number] < 3:
             continue
-        three_value = number * 100
-        if number == 1:
-            three_value = 1000
-        score += three_value
+        score += scores_for_three[number]
         counts[number] -= 3
     if counts[1] > 0:
         score += 100 * counts[1]

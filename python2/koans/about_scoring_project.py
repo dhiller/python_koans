@@ -39,6 +39,13 @@ def score(dice):
             return 1000
         return number * 100
 
+    def score_for_remaining(number):
+        if number == 1:
+            return 100
+        if number == 5:
+            return 50
+        return 0
+
     def is_equal(number):
         return lambda x: x == number
 
@@ -53,10 +60,8 @@ def score(dice):
             continue
         score += scores_for_three[number]
         counts[number] -= 3
-    if counts[1] > 0:
-        score += 100 * counts[1]
-    if counts[5] > 0:
-        score += 50 * counts[5]
+    for number in range(1, 7):
+        score += counts[number] * score_for_remaining(number)
     return score 
 
 
